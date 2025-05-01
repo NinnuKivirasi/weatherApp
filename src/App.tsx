@@ -32,6 +32,11 @@ import '@ionic/react/css/palettes/dark.system.css';
 
 /* Theme variables */
 import './theme/variables.css';
+import Splash from './pages/Splash';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import About from './pages/About';
+import Favorites from './pages/Favorites';
 
 setupIonicReact();
 
@@ -39,11 +44,14 @@ const App: React.FC = () => (
   <IonApp>
     <IonReactRouter>
       <IonRouterOutlet>
-        <Route exact path="/home">
-          <Home />
-        </Route>
-        <Route exact path="/">
-          <Redirect to="/home" />
+      <Route exact path="/weatherApp" component={Splash}/>
+        <Route exact path="/weatherApp/login" component={Login}/>
+        <Route exact path="/weatherApp/register" component={Register}/>
+        <Route exact path="/weatherApp/home" component={Home} />
+        <Route exact path="/weatherApp/about" component={About} />
+        <Route exact path="/weatherApp/favorites" component={Favorites} />
+        <Route exact path="/" >
+          <Redirect to="/weatherApp" />
         </Route>
       </IonRouterOutlet>
     </IonReactRouter>
