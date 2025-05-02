@@ -13,42 +13,62 @@ import {
     IonToolbar } from '@ionic/react';
 import './Home.css';
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import { loginUser } from '../firebaseConfig';
 
 const Login: React.FC = () => {
 
-    return (
-        <>
-          <IonPage id="main-content" content='center'>
-            <IonHeader>
-              <IonToolbar>
-                <IonButtons slot="start">
-                </IonButtons>
-                <IonTitle>Login</IonTitle>
-              </IonToolbar>
-            </IonHeader>
-            <IonContent className="ion-padding">
-            <IonCard>
-            <IonCardContent text-center>
-            <IonList>
-            <IonInput 
-                placeholder="Username"/>
-                <IonInput 
-                  type="password"
-                  placeholder="Password">
-                  <IonInputPasswordToggle slot='end'/>
-                  </IonInput>
-            </IonList>
-            <IonButton expand='block' routerLink='./home'> Login
-          </IonButton>
-            <p>
-            Need to register first? Go <Link to="/weatherApp/register">Register</Link>
-            </p>
-          </IonCardContent>
-          </IonCard>
-            </IonContent>
-          </IonPage>
-        </>
-      );
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+  
+    async function login() {
+      const res = await loginUser(username, password)
+      if (res){
+        console.log('You have logged in!')
+      }
     }
-
-export default Login;
+      
+  
+      return (
+          <>
+            <IonPage id="main-content">
+              <IonHeader>
+                <IonToolbar>
+                  <IonButtons slot="start">
+                  </IonButtons>
+                  <IonTitle>Login</IonTitle>
+                </IonToolbar>
+              </IonHeader>
+              <IonContent className="ion-padding">
+              <IonCard>
+              <IonCardContent text-center>
+              <IonList>
+              <IonInput 
+                  placeholder="Username"
+                  value={username}
+                  onIonChange={(e: any) => 
+                  setUsername(e.target.value)}/>
+  
+                  <IonInput 
+                    type="password"
+                    value={password}
+                    placeholder="Password"
+                    onIonChange={(e: any) => 
+                    setPassword(e.target.value)}>
+                    <IonInputPasswordToggle slot='end'/>
+                    </IonInput>
+              </IonList>
+              <IonButton onClick={login} routerLink='./home' expand='block'> Login
+            </IonButton>
+              <p>
+              Need to register first? Go <Link to="./register">Register</Link>
+              </p>
+            </IonCardContent>
+            </IonCard>
+              </IonContent>
+            </IonPage>
+          </>
+        );
+      }
+  
+  export default Login;
