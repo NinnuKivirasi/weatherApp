@@ -14,7 +14,7 @@ import {
   IonIcon
 } from '@ionic/react';
 import './Home.css';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useState } from 'react';
 import { registerUser } from '../firebaseConfig';
 
@@ -25,6 +25,9 @@ const Register: React.FC = () => {
 
   const [toastMessage, setToastMessage] = useState('');
   const [showToast, setShowToast] = useState(false);
+  
+  // Add history hook for navigation
+  const history = useHistory();
 
   async function register() {
     if (password !== cpassword) {
@@ -41,10 +44,16 @@ const Register: React.FC = () => {
     const res = await registerUser(username, password);
     if (res) {
       setToastMessage('Registration successful!');
+      setShowToast(true);
+      
+      // Add a short delay before redirecting to ensure toast is visible
+      setTimeout(() => {
+        history.push('./login');
+      }, 2000); // Match the toast duration
     } else {
       setToastMessage('Registration failed');
+      setShowToast(true);
     }
-    setShowToast(true);
   }
 
   return (          
@@ -100,9 +109,13 @@ const Register: React.FC = () => {
         isOpen={showToast}
         onDidDismiss={() => setShowToast(false)}
         message={toastMessage}
-        duration={2000}
-        position="top"
-        color={toastMessage.includes('success') ? 'success' : 'danger'}
+        duration={5000}
+        position="middle"
+        buttons={[
+          {
+            text: 'Close',
+          },
+        ]}
       />
     </>
   );

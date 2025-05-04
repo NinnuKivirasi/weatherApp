@@ -14,7 +14,7 @@ import {
   IonToast
 } from '@ionic/react';
 import './Home.css';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useState } from 'react';
 import { loginUser } from '../firebaseConfig';
 
@@ -24,15 +24,23 @@ const Login: React.FC = () => {
 
   const [toastMessage, setToastMessage] = useState('');
   const [showToast, setShowToast] = useState(false);
+  
+  // Add history hook for navigation
+  const history = useHistory();
 
   async function login() {
     const res = await loginUser(username, password);
     if (res) {
       setToastMessage('Login success!');
       setShowToast(true);
+      
+      // Add a short delay before redirecting to ensure toast is visible
+      setTimeout(() => {
+        history.push('./home'); // Redirect to main page after successful login
+      }, 2000); // Match the toast duration
     
     } else {
-      setToastMessage('Failed to login.');
+      setToastMessage('Failed to login!');
       setShowToast(true);
     }
   }
@@ -81,9 +89,13 @@ const Login: React.FC = () => {
         isOpen={showToast}
         onDidDismiss={() => setShowToast(false)}
         message={toastMessage}
-        duration={2000}
-        position="top"
-        color={toastMessage.includes('success') ? 'success' : 'danger'}
+        duration={5000}
+        position="middle"
+        buttons={[
+          {
+            text: 'Close',
+          },
+        ]}
         
       />
 

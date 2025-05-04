@@ -47,6 +47,7 @@ const App: React.FC = () => (
       <Route exact path="/weatherApp" component={Splash}/>
         <Route exact path="/weatherApp/login" component={Login}/>
         <Route exact path="/weatherApp/register" component={Register}/>
+
         <Route exact path="/weatherApp/home" component={Home} />
         <Route exact path="/weatherApp/about" component={About} />
         <Route exact path="/weatherApp/favorites" component={Favorites} />
