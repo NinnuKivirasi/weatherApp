@@ -22,7 +22,6 @@ import { useState, useEffect } from "react";
 import FavoriteButton from "../components/FavoriteButton";
 import { useFavorites } from "../contexts/FavoritesContext";
 
-
 const Home: React.FC = () => {
   const [city, setCity] = useState<string>("");
   const [weatherData, setWeatherData] = useState<any>(null);
