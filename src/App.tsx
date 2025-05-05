@@ -36,50 +36,26 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import About from './pages/About';
 import Favorites from './pages/Favorites';
-import { FavoritesProvider } from './contexts/FavoritesContext';
-import CustomSplashScreen from './components/CustomSplashScreen';
 
 setupIonicReact();
 
+const App: React.FC = () => (
+  <IonApp>
+    <IonReactRouter>
+      <IonRouterOutlet>
+      <Route exact path="/weatherApp" component={Splash}/>
+        <Route exact path="/weatherApp/login" component={Login}/>
+        <Route exact path="/weatherApp/register" component={Register}/>
 
-const App: React.FC = () => {
-
-  const [showSplash, setShowSplash] = useState(true);
-  
-  useEffect(() => {
-    // Hide the native splash when available
-    if (Capacitor.isPluginAvailable('SplashScreen')) {
-      SplashScreen.hide();
-    }
-  }, []);
-  
-  const handleSplashFinish = () => {
-    setShowSplash(false);
-  };
-  
-  if (showSplash) {
-    return <CustomSplashScreen onFinish={handleSplashFinish} />;
-  }
-  
-  return (
-  
-  <FavoritesProvider>
-    <IonApp>
-      <IonReactRouter>
-        <IonRouterOutlet>
-          <Route exact path="/weatherApp" component={Splash}/>
-          <Route exact path="/weatherApp/login" component={Login}/>
-          <Route exact path="/weatherApp/register" component={Register}/>
-          <Route exact path="/weatherApp/home" component={Home} />
-          <Route exact path="/weatherApp/about" component={About} />
-          <Route exact path="/weatherApp/favorites" component={Favorites} />
-          <Route exact path="/" >
-            <Redirect to="/weatherApp" />
-          </Route>
-        </IonRouterOutlet>
-      </IonReactRouter>
-    </IonApp>
-  </FavoritesProvider>
+        <Route exact path="/weatherApp/home" component={Home} />
+        <Route exact path="/weatherApp/about" component={About} />
+        <Route exact path="/weatherApp/favorites" component={Favorites} />
+        <Route exact path="/" >
+          <Redirect to="/weatherApp" />
+        </Route>
+      </IonRouterOutlet>
+    </IonReactRouter>
+  </IonApp>
 );
 };
 export default App;
