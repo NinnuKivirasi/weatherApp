@@ -36,6 +36,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import About from './pages/About';
 import Favorites from './pages/Favorites';
+import Error from './pages/Error';
 import { FavoritesProvider } from './contexts/FavoritesContext';
 import CustomSplashScreen from './components/CustomSplashScreen';
 
@@ -78,7 +79,7 @@ const App: React.FC = () => {
           <Route exact path="/" >
             <Redirect to="/weatherApp" />
           </Route>
-          <Route component={ErrorPage} />
+          <Route component={Error} />
         </IonRouterOutlet>
       </IonReactRouter>
     </IonApp>
