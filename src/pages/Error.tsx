@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 // Import your local image
 import cloudErrorIcon from '../img/thunderstorm-outline.svg'; // Adjust path as needed
 
-const ErrorPage: React.FC = () => {
+const Error: React.FC = () => {
   const history = useHistory();
   
   const goToStart = () => {
@@ -73,4 +73,4 @@ const ErrorPage: React.FC = () => {
   );
 };
 
-export default ErrorPage;
+export default Error;
