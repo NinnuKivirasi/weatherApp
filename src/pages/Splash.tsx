@@ -19,7 +19,7 @@ const Splash: React.FC = () => {
             <IonHeader>
               <IonToolbar>
                 <IonButtons slot="start">
-                  <IonMenuButton></IonMenuButton>
+                  
                 </IonButtons>
                 <IonTitle>Weather App</IonTitle>
               </IonToolbar>
