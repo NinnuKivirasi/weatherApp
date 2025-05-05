@@ -41,6 +41,7 @@ import CustomSplashScreen from './components/CustomSplashScreen';
 
 setupIonicReact();
 
+
 const App: React.FC = () => {
 
   const [showSplash, setShowSplash] = useState(true);
@@ -61,9 +62,6 @@ const App: React.FC = () => {
   }
   
   return (
-
-
-
   
   <FavoritesProvider>
     <IonApp>
