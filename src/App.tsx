@@ -37,6 +37,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import About from './pages/About';
 import Favorites from './pages/Favorites';
+import ErrorPage from './pages/Error';
 
 setupIonicReact();
 
@@ -54,6 +55,7 @@ const App: React.FC = () => (
         <Route exact path="/" >
           <Redirect to="/weatherApp" />
         </Route>
+        <Route component={ErrorPage} />
       </IonRouterOutlet>
     </IonReactRouter>
   </IonApp>

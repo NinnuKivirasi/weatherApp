@@ -1,13 +1,14 @@
 import { initializeApp } from "firebase/app";
 import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
+
 const firebaseConfig = {
-    apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
-    authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
-    projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
-    storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
-    messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
-    appId: import.meta.env.VITE_FIREBASE_APP_ID
+    apiKey: "AIzaSyA-EDDdIyPs7uxKuM6kc7ASTHBg4lKC0ks",
+    authDomain: "weather-app-22885.firebaseapp.com",
+    projectId: "weather-app-22885",
+    storageBucket: "weather-app-22885.firebasestorage.app",
+    messagingSenderId: "695390362412",
+    appId: "1:695390362412:web:51e7e6fad4d0c95dce2a89"
   };
 
 const app = initializeApp(firebaseConfig);
