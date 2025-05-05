@@ -78,6 +78,7 @@ const App: React.FC = () => {
           <Route exact path="/" >
             <Redirect to="/weatherApp" />
           </Route>
+          <Route component={ErrorPage} />
         </IonRouterOutlet>
       </IonReactRouter>
     </IonApp>
