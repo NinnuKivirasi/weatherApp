@@ -70,6 +70,8 @@ const App: React.FC = () => {
   <FavoritesProvider>
     <IonApp>
       <IonReactRouter>
+        <IonSplitPane contentId="main">
+          <Menu />
         <IonRouterOutlet>
           <Route exact path="/weatherApp" component={Splash}/>
           <Route exact path="/weatherApp/login" component={Login}/>
@@ -82,6 +84,7 @@ const App: React.FC = () => {
           </Route>
           <Route component={Error} />
         </IonRouterOutlet>
+      </IonSplitPane>
       </IonReactRouter>
     </IonApp>
   </FavoritesProvider>
