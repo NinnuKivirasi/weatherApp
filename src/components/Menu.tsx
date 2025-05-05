@@ -39,19 +39,19 @@ interface AppPage {
 const appPages: AppPage[] = [
   {
     title: "Weather",
-    url: "/Home",
+    url: "weatherApp/Home",
     iosIcon: partlySunnyOutline,
     mdIcon: partlySunnyOutline,
   },
   {
     title: "Favorites",
-    url: "/favorites",
+    url: "weatherApp/favorites",
     iosIcon: heartOutline,
     mdIcon: heartOutline,
   },
   {
     title: "About App",
-    url: "/about",
+    url: "weatherApp/about",
     iosIcon: informationCircleOutline,
     mdIcon: informationCircleOutline,
   },
