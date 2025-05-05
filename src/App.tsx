@@ -72,7 +72,7 @@ const App: React.FC = () => {
       <IonReactRouter>
         <IonSplitPane contentId="main">
           <Menu />
-        <IonRouterOutlet>
+        <IonRouterOutlet id="main">
           <Route exact path="/weatherApp" component={Splash}/>
           <Route exact path="/weatherApp/login" component={Login}/>
           <Route exact path="/weatherApp/register" component={Register}/>
