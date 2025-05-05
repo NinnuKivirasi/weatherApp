@@ -1,190 +1,45 @@
-import React, { useState, useEffect } from 'react';
-import { 
-  IonPage, 
-  IonToolbar, 
-  IonButtons, 
-  IonTitle, 
-  IonContent, 
-  IonCard, 
-  IonCardContent, 
-  IonList, 
-  IonInput, 
-  IonButton,
-  IonInputPasswordToggle,
-  IonSpinner,
-  IonAlert
-} from '@ionic/react';
-import { Link, useHistory } from 'react-router-dom';
-import { registerUser } from '../firebaseConfig';
+import { initializeApp } from "firebase/app";
+import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 
-const Register: React.FC = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [cpassword, setCPassword] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-
-  const [alertMessage, setAlertMessage] = useState('');
-  const [alertHeader, setAlertHeader] = useState('');
-  const [showAlert, setShowAlert] = useState(false);
-  
-  // Add custom styles to document head
-  useEffect(() => {
-    const style = document.createElement('style');
-    style.innerHTML = `
-      .custom-toast {
-        --background: white !important;
-        --border-color: black !important;
-        --border-style: solid !important;
-        --border-width: 1px !important;
-        --border-radius: 8px !important;
-        --color: #333 !important;
-      }
-      
-      .toast-button {
-        background-color: black !important;
-        color: white !important;
-        border-radius: 4px !important;
-        margin-top: 8px !important;
-        width: 100% !important;
-      }
-      
-      .custom-alert {
-        --background: white !important;
-        --border-color: black !important;
-        --border-style: solid !important;
-        --border-width: 1px !important;
-        --border-radius: 8px !important;
-      }
-      
-      .alert-button {
-        background-color: black !important;
-        color: white !important;
-        border-radius: 4px !important;
-      }
-    `;
-    document.head.appendChild(style);
-    
-    return () => {
-      document.head.removeChild(style);
-    };
-  }, []);
-  
-  // Add history hook for navigation
-  const history = useHistory();
-
-  // Function to show alert with header and message
-  const showAlertWithInfo = (header: string, message: string) => {
-    setAlertHeader(header);
-    setAlertMessage(message);
-    setShowAlert(true);
+const firebaseConfig = {
+    apiKey: "AIzaSyA-EDDdIyPs7uxKuM6kc7ASTHBg4lKC0ks",
+    authDomain: "weather-app-22885.firebaseapp.com",
+    projectId: "weather-app-22885",
+    storageBucket: "weather-app-22885.firebasestorage.app",
+    messagingSenderId: "695390362412",
+    appId: "1:695390362412:web:51e7e6fad4d0c95dce2a89"
   };
 
-  // Clear input when focused (only if it contains default or placeholder text)
-  const handleFocus = (setter: React.Dispatch<React.SetStateAction<string>>, currentValue: string) => {
-    // Only clear if it contains default text or is empty
-    // This prevents clearing user input when they click back into a field
-  };
+const app = initializeApp(firebaseConfig);
 
-  async function register() {
-    if (password !== cpassword) {
-      showAlertWithInfo('Error', 'Passwords do not match');
-      return;
-    }
-    if (username.trim() === '' || password.trim() === '') {
-      showAlertWithInfo('Error', 'Username and password required');
-      return;
-    }
 
-    setIsLoading(true);
-    
+const auth = getAuth(app);
+
+
+export async function loginUser(username: string, password: string) {
+    const email = `${username}@codedamn.com`
+
+    try{
+        const res = await signInWithEmailAndPassword(auth, email, password)
+        console.log(res)
+        return true
+    } 
+    catch (error) {
+        console.log(error)
+        return false
+    }    
+}
+
+export async function registerUser(username: string, password: string) {
+    const email = `${username}@codedamn.com`
+
     try {
-      const res = await registerUser(username, password);
-      setIsLoading(false);
-      
-      if (res) {
-        showAlertWithInfo('Success', 'Registration successful!');
-        
-        // Add a short delay before redirecting to ensure alert is visible
-        setTimeout(() => {
-          history.push('./login');
-        }, 2000); // Match the alert duration
-      } else {
-        showAlertWithInfo('Error', 'Registration failed');
-      }
+        const res = await createUserWithEmailAndPassword(auth, email, password)
+        console.log(res)
+        return true
     } catch (error) {
-      setIsLoading(false);
-      showAlertWithInfo('Error', 'An unexpected error occurred');
+        console.log(error)
+        return false
     }
-  }
-
-  return (          
-    <>
-      <IonPage id="main-content">
-        <IonToolbar>
-          <IonButtons slot="start" />
-          <IonTitle>Register</IonTitle>
-        </IonToolbar>
-
-        <IonContent className="ion-padding">
-          <IonCard>
-            <IonCardContent>
-              <IonList>
-                <IonInput 
-                  placeholder="Username"
-                  value={username}
-                  onIonChange={(e: any) => setUsername(e.target.value)}
-                />
-
-                <IonInput 
-                  type="password"
-                  value={password}
-                  placeholder="Password"
-                  onIonChange={(e: any) => setPassword(e.target.value)}
-                >
-                  <IonInputPasswordToggle slot='end'/>
-                </IonInput>
-
-                <IonInput 
-                  type="password"
-                  value={cpassword}
-                  placeholder="Confirm password"
-                  onIonChange={(e: any) => setCPassword(e.target.value)}
-                >
-                  <IonInputPasswordToggle slot='end'/>
-                </IonInput> 
-
-                <IonButton expand='block' onClick={register} disabled={isLoading}>
-                  {isLoading ? <IonSpinner name="dots" /> : 'Register'}
-                </IonButton>
-
-                <p>
-                  You have an account already? <Link to="./login">Login</Link>
-                </p>
-              </IonList>
-            </IonCardContent>
-          </IonCard>
-        </IonContent>
-      </IonPage>
-
-      <IonAlert
-        isOpen={showAlert}
-        onDidDismiss={() => setShowAlert(false)}
-        header={alertHeader}
-        message={alertMessage}
-        cssClass="custom-alert"
-        buttons={[
-          {
-            text: 'Close',
-            cssClass: 'alert-button',
-            handler: () => {
-              setShowAlert(false);
-            }
-          }
-        ]}
-      />
-    </>
-  );
-};
-
-export default Register;
+}
