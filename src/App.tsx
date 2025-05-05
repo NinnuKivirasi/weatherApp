@@ -37,6 +37,7 @@ import Register from './pages/Register';
 import About from './pages/About';
 import Favorites from './pages/Favorites';
 import Error from './pages/Error';
+import Menu from './components/Menu';
 import { FavoritesProvider } from './contexts/FavoritesContext';
 import CustomSplashScreen from './components/CustomSplashScreen';
 
