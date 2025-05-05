@@ -60,10 +60,9 @@ const appPages: AppPage[] = [
 const Menu: React.FC = () => {
   const location = useLocation();
 
-  // Define routes where menu should be hidden - use lowercase for consistency
+  
   const hideMenuOnRoutes = ["/splash"];
 
-  // Make path comparison case-insensitive
   const shouldHideMenu = hideMenuOnRoutes.some(
     (route) =>
       location.pathname.toLowerCase() === route ||
