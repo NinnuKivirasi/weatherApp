@@ -56,29 +56,7 @@ const Favorites: React.FC = () => {
 
   return (
     <>
-      <IonMenu contentId="favorites-content">
-        <IonHeader>
-          <IonToolbar>
-            <IonButtons slot="start">
-              <IonMenuButton></IonMenuButton>
-            </IonButtons>
-            <IonTitle>Weather App</IonTitle>
-          </IonToolbar>
-        </IonHeader>
-        <IonContent className="ion-padding">
-          <IonList>
-            <IonItem>
-              <Link to="./home">Main</Link>
-            </IonItem>
-            <IonItem>
-              <Link to="./favorites">Favorites</Link>
-            </IonItem>
-            <IonItem>
-              <Link to="./about">About</Link>
-            </IonItem>
-          </IonList>
-        </IonContent>
-      </IonMenu>
+     
       <IonPage id="favorites-content">
         <IonHeader>
           <IonToolbar>
