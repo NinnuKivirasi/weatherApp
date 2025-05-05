@@ -37,7 +37,7 @@ const Home: React.FC = () => {
   }, [city]);
 
   const fetchWeather = async (city: string) => {
-    
+    // Don't fetch if city is empty
     if (!city.trim()) {
       setWeatherData(null);
       setError(null);
@@ -62,11 +62,11 @@ const Home: React.FC = () => {
     } catch (error: any) {
       console.log("Error", error);
       setWeatherData(null);
-      setError(error.message || "Weather information is not available");
+      setError(error.message || "weather information is not available");
     }
   };
 
-  // clear input
+  // Handle search input clear
   const handleClear = () => {
     setCity("");
     setWeatherData(null);

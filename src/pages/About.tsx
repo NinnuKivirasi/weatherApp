@@ -19,7 +19,7 @@ const About: React.FC = () => {
             <IonButtons slot="start" class="pageTitle">
               <IonMenuButton />
             </IonButtons>
-            <IonTitle size="large" class="pageTitle">
+            <IonTitle>
               About
             </IonTitle>
           </IonToolbar>
@@ -40,9 +40,8 @@ const About: React.FC = () => {
   
             <IonCardContent className="about-card">
               <p>
-                This is my school project. A simple weather app that allows you to
-                fetch the current weather of a selected city. The project is still
-                under development, and new features are coming soon.
+                This is a simple weather app that allows you to
+                fetch the current weather of cities and save them as favorites.
               </p>
             </IonCardContent>
           </IonCard>

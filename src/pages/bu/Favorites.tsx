@@ -1,5 +1,5 @@
 import {
-  IonButton,
+  IonBackButton,
   IonButtons,
   IonCard,
   IonCardContent,
@@ -12,44 +12,33 @@ import {
   IonMenu,
   IonMenuButton,
   IonPage,
-  IonSearchbar,
   IonTitle,
   IonToolbar,
-} from "@ionic/react";
-import "./Home.css";
-import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
-import FavoriteButton from "../components/FavoriteButton";
-import { useFavorites } from "../contexts/FavoritesContext";
+  IonButton,
+  IonIcon,
+  IonItemSliding,
+  IonItemOptions,
+  IonItemOption,
+} from '@ionic/react';
+import { Link } from 'react-router-dom';
+import { useFavorites } from '../contexts/FavoritesContext';
+import { trash, search } from 'ionicons/icons';
+import { useState } from 'react';
 
-const Home: React.FC = () => {
-  const [city, setCity] = useState<string>("");
+const Favorites: React.FC = () => {
+  const { favorites, removeFavorite } = useFavorites();
+  const [selectedCity, setSelectedCity] = useState<string | null>(null);
   const [weatherData, setWeatherData] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
-  const { isFavorite } = useFavorites();
-
-  // clear weather data when empty
-  useEffect(() => {
-    if (city === "") {
-      setWeatherData(null);
-      setError(null);
-    }
-  }, [city]);
 
   const fetchWeather = async (city: string) => {
-    
-    if (!city.trim()) {
-      setWeatherData(null);
-      setError(null);
-      return;
-    }
-
     const API_KEY = "406cefbb7f883b23d923fd0a1c90828a";
     const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`;
 
     try {
       setError(null);
       setWeatherData(null);
+      setSelectedCity(city);
 
       const response = await fetch(url);
       if (!response.ok) {
@@ -57,7 +46,6 @@ const Home: React.FC = () => {
       }
 
       const data = await response.json();
-      console.log(data);
       setWeatherData(data);
     } catch (error: any) {
       console.log("Error", error);
@@ -66,16 +54,9 @@ const Home: React.FC = () => {
     }
   };
 
-  // clear input
-  const handleClear = () => {
-    setCity("");
-    setWeatherData(null);
-    setError(null);
-  };
-
   return (
     <>
-      <IonMenu contentId="main-content">
+      <IonMenu contentId="favorites-content">
         <IonHeader>
           <IonToolbar>
             <IonButtons slot="start">
@@ -98,46 +79,45 @@ const Home: React.FC = () => {
           </IonList>
         </IonContent>
       </IonMenu>
-      <IonPage id="main-content">
+      <IonPage id="favorites-content">
         <IonHeader>
           <IonToolbar>
             <IonButtons slot="start">
               <IonMenuButton></IonMenuButton>
             </IonButtons>
-            <IonTitle>Weather App</IonTitle>
+            <IonTitle>Favorite Cities</IonTitle>
           </IonToolbar>
         </IonHeader>
         <IonContent>
-          <IonCard>
-            <IonCardContent className="ion-padding">
-              <IonSearchbar
-                placeholder="City"
-                show-clear-button="always"
-                value={city}
-                onIonInput={(e) => setCity(e.detail.value!)}
-                onIonClear={handleClear}
-              ></IonSearchbar>
-              <IonButton expand="full" onClick={() => fetchWeather(city)}>
-                Check Weather
-              </IonButton>
-            </IonCardContent>
-          </IonCard>
-
-          {error && (
-            <IonCard color="danger">
+          {favorites.length === 0 ? (
+            <IonCard>
               <IonCardContent>
-                <p>{error}</p>
+                <p>No favorite cities added yet.</p>
+                <p>Go to the main page and search for cities and add them to your favorites.</p>
               </IonCardContent>
             </IonCard>
+          ) : (
+            <IonList>
+              {favorites.map((city, index) => (
+                <IonItemSliding key={index}>
+                  <IonItem button onClick={() => fetchWeather(city.name)}>
+                    <p>{city.name}</p>
+                    <IonIcon slot="end" icon={search} />
+                  </IonItem>
+                  <IonItemOptions side="end">
+                    <IonItemOption color="danger" onClick={() => removeFavorite(city.name)}>
+                      <IonIcon slot="icon-only" icon={trash} />
+                    </IonItemOption>
+                  </IonItemOptions>
+                </IonItemSliding>
+              ))}
+            </IonList>
           )}
 
-          {weatherData && (
+          {weatherData && selectedCity && (
             <IonCard>
               <IonCardHeader>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <IonCardTitle>{weatherData.name}</IonCardTitle>
-                  <FavoriteButton city={{ name: weatherData.name, country: weatherData.sys?.country }} />
-                </div>
+                <IonCardTitle>{weatherData.name}</IonCardTitle>
               </IonCardHeader>
               <IonCardContent className="weather-card">
                 <img
@@ -163,10 +143,18 @@ const Home: React.FC = () => {
               </IonCardContent>
             </IonCard>
           )}
+
+          {error && (
+            <IonCard color="danger">
+              <IonCardContent>
+                <p>{error}</p>
+              </IonCardContent>
+            </IonCard>
+          )}
         </IonContent>
       </IonPage>
     </>
   );
 };
 
-export default Home;
+export default Favorites;

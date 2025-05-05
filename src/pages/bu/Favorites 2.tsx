@@ -30,17 +30,17 @@ const Favorites: React.FC = () => {
   const [errors, setErrors] = useState<{ [city: string]: string | null }>({});
 
   useEffect(() => {
-    
+    // Fetch weather for all favorite cities when component mounts or favorites change
     favorites.forEach(city => {
       fetchWeather(city.name);
     });
-  }, [favorites.length]); 
+  }, [favorites.length]); // Re-run when the number of favorites changes
 
   const fetchWeather = async (city: string) => {
     const API_KEY = "406cefbb7f883b23d923fd0a1c90828a";
     const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`;
 
-   
+    // Set loading state for this city
     setLoading(prev => ({ ...prev, [city]: true }));
     setErrors(prev => ({ ...prev, [city]: null }));
 
